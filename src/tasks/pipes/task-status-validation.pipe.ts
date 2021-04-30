@@ -8,12 +8,14 @@ export class TaskStatusValidationPipe implements PipeTransform {
         TaskStatus.DONE
     ]
     transform(value: any) {
-        value = value.toUpperCase();
+        if (value) {
+            value = value.toUpperCase();
 
-        if (!this.isStatusValid(value)) {
-            throw new BadRequestException(`${value} is an invalid status`);
+            if (!this.isStatusValid(value)) {
+                throw new BadRequestException(`${value} is an invalid status`);
+            }
+            return value;
         }
-        return value;
     }
 
     private isStatusValid(status: any) {
